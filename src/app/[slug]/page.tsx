@@ -56,34 +56,50 @@ export default async function Page({
   );
 
   return (
-    <main className="p-8 font-sans">
-      <h1 className="text-2xl font-bold mb-4">{data.title}</h1>
-      {data.author && <p className="mb-2 text-sm">Por {data.author.name}</p>}
-      {data.publishedAt && (
-        <p className="mb-2 text-xs text-gray-500">
-          Publicado el {new Date(data.publishedAt).toLocaleDateString()}
-        </p>
-      )}
+    <main className="font-sans">
       {data.mainImage?.asset?.url && (
-        <img
-          src={data.mainImage.asset.url}
-          alt={data.mainImage.alt || ""}
-          className="mb-4 max-w-xl"
-        />
-      )}
-      {data.body && (
-        <PortableText value={data.body} components={portableTextComponents} />
-      )}
-      {data.categories && data.categories.length > 0 && (
-        <div className="mt-4">
-          Categorías:{" "}
-          {data.categories.map((cat: any) => (
-            <span key={cat.title} className="mr-2">
-              {cat.title}
-            </span>
-          ))}
+        <div className="relative w-full h-56 sm:h-72 md:h-96 mb-8">
+          <img
+            src={data.mainImage.asset.url}
+            alt={data.mainImage.alt || ""}
+            className="object-cover w-full h-full"
+          />
+          <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-4 sm:p-8">
+            <h1 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-white drop-shadow mb-1 text-center w-full">
+              {data.title}
+            </h1>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 justify-center">
+              {data.publishedAt && (
+                <p className="text-xs sm:text-sm text-gray-200 drop-shadow">
+                  Publicado el {new Date(data.publishedAt).toLocaleDateString()}
+                </p>
+              )}
+              {data.author && (
+                <p className="text-xs sm:text-sm text-gray-300 drop-shadow">
+                  Por {data.author.name}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
       )}
+      <div className="px-4 md:px-0 max-w-2xl mx-auto">
+        {data.body && (
+          <div className="leading-relaxed text-lg space-y-4">
+            <PortableText value={data.body} components={portableTextComponents} />
+          </div>
+        )}
+        {data.categories && data.categories.length > 0 && (
+          <div className="mt-4">
+            Categorías:{" "}
+            {data.categories.map((cat: any) => (
+              <span key={cat.title} className="mr-2">
+                {cat.title}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
     </main>
   );
 }
