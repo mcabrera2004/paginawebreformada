@@ -56,7 +56,7 @@ export default async function Page({
   );
 
   return (
-    <main className="p-8">
+    <main className="p-8 font-sans">
       <h1 className="text-2xl font-bold mb-4">{data.title}</h1>
       {data.author && <p className="mb-2 text-sm">Por {data.author.name}</p>}
       {data.publishedAt && (

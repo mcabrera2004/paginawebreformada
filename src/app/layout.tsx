@@ -1,5 +1,5 @@
 // src/app/layout.tsx
-
+import "./globals.css";
 import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
