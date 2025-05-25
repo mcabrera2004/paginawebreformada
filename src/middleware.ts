@@ -1,4 +1,3 @@
-// filepath: src/middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -9,9 +8,9 @@ export function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/static') ||
-    pathname.startsWith('/favicon.ico') ||
     pathname.startsWith('/fonts') ||
-    pathname === '/'
+    pathname === '/' ||
+    pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico)$/) // permite imágenes y favicon en la raíz
   ) {
     return NextResponse.next();
   }
