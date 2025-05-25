@@ -1,0 +1,24 @@
+// filepath: src/middleware.ts
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Permitir rutas internas y recursos estáticos
+  if (
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/static') ||
+    pathname.startsWith('/favicon.ico') ||
+    pathname.startsWith('/fonts') ||
+    pathname === '/'
+  ) {
+    return NextResponse.next();
+  }
+
+  return NextResponse.redirect(new URL('/', request.url));
+}
+
+export const config = {
+  matcher: '/:path*',
+};
