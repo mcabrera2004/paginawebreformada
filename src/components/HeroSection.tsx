@@ -2,14 +2,17 @@ import Image from "next/image";
 
 export function HeroSection() {
   return (
-    <section className="relative w-full h-screen flex items-center justify-center bg-black/60">
-      <Image
-        src="/presbyterian.jpg"
-        alt="Fondo teología reformada"
-        fill
-        className="object-cover -z-10"
-        priority
-      />
+    <section className="relative w-full h-screen flex items-center justify-center">
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/presbyterian.jpg"
+          alt="Fondo teología reformada"
+          fill
+          className="object-cover w-full h-full blur-none"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
       <div className="relative z-10 flex flex-col items-center text-center text-white px-4">
         <h1 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
           Explorando la Teología Reformada

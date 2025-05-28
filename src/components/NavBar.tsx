@@ -25,12 +25,12 @@ export function NavBar() {
     >
       <div className="max-w-[1200px] w-full mx-auto px-[25px] pt-[18px] flex items-center">
         <div className="font-black">
-          <a href="#">Transparent to Solid Nav Row</a>
+          <a className="text-white" href="#">Transparent to Solid Nav Row</a>
         </div>
         <div className="ml-auto flex space-x-5">
-          <a href="#">Item One</a>
-          <a href="#">Item Two</a>
-          <a href="#">Item Three</a>
+          <a className="text-white" href="#">Item One</a>
+          <a className="text-white" href="#">Item Two</a>
+          <a className="text-white" href="#">Item Three</a>
         </div>
       </div>
     </nav>
