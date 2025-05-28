@@ -7,6 +7,7 @@ import {
 } from 'embla-carousel'
 import useEmblaCarousel from 'embla-carousel-react'
 import { NextButton, PrevButton, usePrevNextButtons } from './EmblaCarouselArrowButtons'
+import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures' // Importamos el plugin
 
 const TWEEN_FACTOR_BASE = 0.2
 
@@ -17,7 +18,8 @@ type PropType = {
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props
-  const [emblaRef, emblaApi] = useEmblaCarousel(options)
+  // Se añade el plugin como parámetro adicional para usarEmblaCarousel
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [WheelGesturesPlugin()])
   const tweenFactor = useRef(0)
   const tweenNodes = useRef<HTMLElement[]>([])
 
