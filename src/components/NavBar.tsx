@@ -19,9 +19,10 @@ export function NavBar() {
 
   return (
     <nav
-      className={`fixed top-0 w-full h-[58px] transition-colors duration-200 text-white tracking-wide ${
-        solid ? "bg-gray-400" : "bg-transparent"
-      }`}
+      className={`fixed top-0 w-full h-[58px] transition-colors duration-200 text-white tracking-wide z-50`}
+      style={{
+        backgroundColor: solid ? "rgb(53, 35, 23)" : "transparent"
+      }}
     >
       <div className="max-w-[1200px] w-full mx-auto px-[25px] pt-[18px] flex items-center">
         <div className="font-black">

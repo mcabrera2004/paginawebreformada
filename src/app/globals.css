@@ -3,10 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #c39a6c;
+  --background: #fef3c7;
   --foreground: #171717;
 }
+
 /* Modo oscuro
+#fef3c7
+#ffea98 MEJOR
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
