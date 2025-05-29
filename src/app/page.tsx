@@ -32,27 +32,34 @@ export default async function Home() {
       <NavBar />
       <HeroSection />
       <div className="flex flex-col md:flex-row items-start p-8 pt-[70px] gap-8">
-        <main className="flex-1">
-          <h1 className="text-2xl font-bold mb-6">Artículos recientes</h1>
-          <ul className="space-y-3">
-            {posts.map((post) => (
-              <li key={post._id}>
-                <a
-                  href={`/${post.slug.current}`}
-                  className="text-blue-600 underline"
-                >
-                  {post.title}
-                </a>
-              </li>
-            ))}
-          </ul>
+        <main className="md:basis-[49%] w-full flex flex-col items-center justify-center text-center ">
+          <img
+            src="/logo-transparente.png"
+            alt="Logo"
+            className="w-[400px] mb-9"
+          />
         </main>
-        <aside className="w-full md:w-[500px] flex-shrink-0">
+        <aside className="md:basis-[51%] w-full">
           <EmblaCarousel
             slides={fakeArticles.map((a) => a.id)}
             options={{ loop: true }}
           />
         </aside>
+      </div>
+      <div className="w-full px-8 pb-8">
+        <h1 className="text-2xl font-bold mb-6">Artículos recientes</h1>
+        <ul className="space-y-3">
+          {posts.map((post) => (
+            <li key={post._id}>
+              <a
+                href={`/${post.slug.current}`}
+                className="text-blue-600 underline"
+              >
+                {post.title}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );

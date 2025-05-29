@@ -101,12 +101,12 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             <div
               key={index}
               className="transform flex-none"
-              style={{ flexBasis: "80%", paddingLeft: "1rem" }}
+              style={{ flexBasis: "65%", paddingLeft: "1rem" }}
             >
               <div className="rounded-[1.8rem] h-full overflow-hidden">
                 <div className="relative h-full w-full flex justify-center embla__parallax__layer">
                   <img
-                    className="rounded-[1.8rem] block h-[19rem] w-full object-cover"
+                    className="rounded-[1.8rem] block h-[22rem] w-full object-cover"
                     src={`https://picsum.photos/600/350?v=${index}`}
                     alt="Your alt text"
                     style={{ flex: "0 0 calc(115% + 2rem)" }}
