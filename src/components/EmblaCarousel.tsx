@@ -101,7 +101,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             <div
               key={index}
               className="transform flex-none"
-              style={{ flexBasis: "65%", paddingLeft: "1rem" }}
+              style={{ flexBasis: "85%", paddingLeft: "1rem" }}
             >
               <div className="rounded-[1.8rem] h-full overflow-hidden">
                 <div className="relative h-full w-full flex justify-center embla__parallax__layer">
