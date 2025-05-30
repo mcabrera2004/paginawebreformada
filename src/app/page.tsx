@@ -35,13 +35,18 @@ export default async function Home() {
     <>
       <NavBar />
       <HeroSection />
-      <div className="w-full flex flex-col items-center p-8 pt-[70px] gap-8">
-        <aside className="w-full">
-          <EmblaCarousel
-            slides={fakeArticles}
-            options={{ loop: true }}
+      <div className="w-full my-8 flex flex-col md:flex-row gap-8">
+        <div className="w-full md:w-[35%] flex justify-center items-center">
+          {/* Reemplaza '/logo.png' con la ruta real a tu logo */}
+          <img
+            src="/logo-transparente.png"
+            alt="Logo"
+            className="w-full h-auto max-w-[350px]"
           />
-        </aside>
+        </div>
+        <div className="w-full md:w-[65%]">
+          <EmblaCarousel slides={fakeArticles} options={{ loop: true }} />
+        </div>
       </div>
       <div className="w-full px-8 pb-8">
         <h1 className="text-2xl font-bold mb-6">Artículos recientes</h1>

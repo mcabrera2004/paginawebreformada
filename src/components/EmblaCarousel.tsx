@@ -96,12 +96,12 @@ const Card: React.FC<CardProps> = ({ id, title, image, onClick, selected }) => {
   return (
     <div
       onClick={onClick}
-      className={`w-[220px] h-[320px] mx-2 cursor-pointer rounded-lg bg-white border-2 ${
+      className={`w-[330px] h-[380px] mx-2 cursor-pointer rounded-lg bg-white border-2 ${
         selected ? 'border-blue-500' : 'border-transparent'
       }`}
       tabIndex={0}
     >
-      <img src={image} alt={title} className="w-full h-[180px] object-cover rounded-t-lg" />
+      <img src={image} alt={title} className="w-full h-[240px] object-cover rounded-t-lg" />
       <div className="p-2 text-center">{title}</div>
     </div>
   );
