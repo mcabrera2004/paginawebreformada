@@ -35,7 +35,7 @@ export default async function Home() {
     <>
       <NavBar />
       <HeroSection />
-      <div className="w-full my-8 flex flex-col md:flex-row gap-8">
+      <div className="w-full my-16 flex flex-col md:flex-row gap-8">
         {/* Bloque de la izquierda con padding a la izquierda en pantallas medianas */}
         <div className="w-full md:w-[35%] flex justify-center items-center md:pl-4">
           <img

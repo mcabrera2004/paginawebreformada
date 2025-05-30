@@ -31,8 +31,12 @@ const EmblaCarousel: React.FC<EmblaCarouselProps> = ({ slides }) => {
     };
 
   return (
-    <div className="overflow-x-auto scrollbar-hide">
-      <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+    <div className="relative">
+      <ScrollMenu
+        LeftArrow={LeftArrow}
+        RightArrow={RightArrow}
+        wrapperClassName="overflow-x-auto scrollbar-hide"
+      >
         {slides.map(({ id, title, image }) => (
           <Card
             key={id}
@@ -54,15 +58,15 @@ const LeftArrow: React.FC = () => {
   // @ts-ignore
   const isFirstItemVisible = visibility.useIsVisible?.('first', true);
   return (
-    <Arrow
-      disabled={isFirstItemVisible}
-      // @ts-ignore
-      onClick={() => visibility.scrollPrev?.()}
-      className="left"
-    >
-      {/* Puedes usar un ícono aquí */}
-      <span className="text-2xl">{'‹'}</span>
-    </Arrow>
+    <div className="absolute bottom-[-50px] left-1/2 transform -translate-x-16">
+      <Arrow
+        disabled={isFirstItemVisible}
+        // @ts-ignore
+        onClick={() => visibility.scrollPrev?.()}
+      >
+        <span className="text-2xl">{'‹'}</span>
+      </Arrow>
+    </div>
   );
 };
 
@@ -71,15 +75,15 @@ const RightArrow: React.FC = () => {
   // @ts-ignore
   const isLastItemVisible = visibility.useIsVisible?.('last', false);
   return (
-    <Arrow
-      disabled={isLastItemVisible}
-      // @ts-ignore
-      onClick={() => visibility.scrollNext?.()}
-      className="right"
-    >
-      {/* Puedes usar un ícono aquí */}
-      <span className="text-2xl">{'›'}</span>
-    </Arrow>
+    <div className="absolute bottom-[-50px] left-1/2 transform translate-x-16">
+      <Arrow
+        disabled={isLastItemVisible}
+        // @ts-ignore
+        onClick={() => visibility.scrollNext?.()}
+      >
+        <span className="text-2xl">{'›'}</span>
+      </Arrow>
+    </div>
   );
 };
 
@@ -107,10 +111,13 @@ const Card: React.FC<CardProps> = ({ id, title, image, onClick, selected }) => {
   );
 };
 
-const Arrow: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ children, ...props }) => (
+const Arrow: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
+  children,
+  ...props
+}) => (
   <button
     {...props}
-    className="px-2 py-1 text-2xl bg-white rounded-full shadow disabled:opacity-50"
+    className="w-10 h-10 flex items-center justify-center text-2xl bg-white rounded-full shadow disabled:opacity-50"
   >
     {children}
   </button>
