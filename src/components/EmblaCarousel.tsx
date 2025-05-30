@@ -58,7 +58,7 @@ const LeftArrow: React.FC = () => {
   // @ts-ignore
   const isFirstItemVisible = visibility.useIsVisible?.('first', true);
   return (
-    <div className="absolute bottom-[-50px] left-1/2 transform -translate-x-16">
+    <div className="absolute bottom-[-50px] left-[48%] transform -translate-x-16">
       <Arrow
         disabled={isFirstItemVisible}
         // @ts-ignore
@@ -75,7 +75,7 @@ const RightArrow: React.FC = () => {
   // @ts-ignore
   const isLastItemVisible = visibility.useIsVisible?.('last', false);
   return (
-    <div className="absolute bottom-[-50px] left-1/2 transform translate-x-16">
+    <div className="absolute bottom-[-50px] left-[48%] transform translate-x-16">
       <Arrow
         disabled={isLastItemVisible}
         // @ts-ignore
