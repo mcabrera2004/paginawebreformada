@@ -1,136 +1,119 @@
 'use client';
-import React, { useCallback, useEffect, useRef } from 'react'
-import {
-  EmblaCarouselType,
-  EmblaEventType,
-  EmblaOptionsType
-} from 'embla-carousel'
-import useEmblaCarousel from 'embla-carousel-react'
-import { NextButton, PrevButton, usePrevNextButtons } from './EmblaCarouselArrowButtons'
-import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures' // Importamos el plugin
+import React from 'react';
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
+import 'react-horizontal-scrolling-menu/dist/styles.css';
 
-const TWEEN_FACTOR_BASE = 0.2
+type Slide = {
+  id: number;
+  title: string;
+  image: string;
+};
 
-type PropType = {
-  slides: number[]
-  options?: EmblaOptionsType
-}
+type EmblaCarouselProps = {
+  slides: Slide[];
+  options?: any;
+};
 
-const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options } = props
-  // Se añade el plugin como parámetro adicional para usarEmblaCarousel
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [WheelGesturesPlugin()])
-  const tweenFactor = useRef(0)
-  const tweenNodes = useRef<HTMLElement[]>([])
+const EmblaCarousel: React.FC<EmblaCarouselProps> = ({ slides }) => {
+  const [selected, setSelected] = React.useState<number[]>([]);
 
-  const {
-    prevBtnDisabled,
-    nextBtnDisabled,
-    onPrevButtonClick,
-    onNextButtonClick
-  } = usePrevNextButtons(emblaApi)
+  const isItemSelected = (id: number) => selected.includes(id);
 
-  const setTweenNodes = useCallback((emblaApi: EmblaCarouselType): void => {
-    tweenNodes.current = emblaApi.slideNodes().map((slideNode) => {
-      return slideNode.querySelector('.embla__parallax__layer') as HTMLElement
-    })
-  }, [])
-
-  const setTweenFactor = useCallback((emblaApi: EmblaCarouselType) => {
-    tweenFactor.current = TWEEN_FACTOR_BASE * emblaApi.scrollSnapList().length
-  }, [])
-
-  const tweenParallax = useCallback(
-    (emblaApi: EmblaCarouselType, eventName?: EmblaEventType) => {
-      const engine = emblaApi.internalEngine()
-      const scrollProgress = emblaApi.scrollProgress()
-      const slidesInView = emblaApi.slidesInView()
-      const isScrollEvent = eventName === 'scroll'
-
-      emblaApi.scrollSnapList().forEach((scrollSnap, snapIndex) => {
-        let diffToTarget = scrollSnap - scrollProgress
-        const slidesInSnap = engine.slideRegistry[snapIndex]
-
-        slidesInSnap.forEach((slideIndex) => {
-          if (isScrollEvent && !slidesInView.includes(slideIndex)) return
-
-          if (engine.options.loop) {
-            engine.slideLooper.loopPoints.forEach((loopItem) => {
-              const target = loopItem.target()
-              if (slideIndex === loopItem.index && target !== 0) {
-                const sign = Math.sign(target)
-                if (sign === -1) {
-                  diffToTarget = scrollSnap - (1 + scrollProgress)
-                }
-                if (sign === 1) {
-                  diffToTarget = scrollSnap + (1 - scrollProgress)
-                }
-              }
-            })
-          }
-
-          const translate = diffToTarget * (-1 * tweenFactor.current) * 100
-          const tweenNode = tweenNodes.current[slideIndex]
-          tweenNode.style.transform = `translateX(${translate}%)`
-        })
-      })
-    },
-    []
-  )
-
-  useEffect(() => {
-    if (!emblaApi) return
-
-    setTweenNodes(emblaApi)
-    setTweenFactor(emblaApi)
-    tweenParallax(emblaApi)
-
-    emblaApi
-      .on('reInit', setTweenNodes)
-      .on('reInit', setTweenFactor)
-      .on('reInit', tweenParallax)
-      .on('scroll', tweenParallax)
-      .on('slideFocus', tweenParallax)
-  }, [emblaApi, tweenParallax])
+  const handleClick =
+    (id: number) =>
+    () => {
+      const itemSelected = isItemSelected(id);
+      setSelected((currentSelected) =>
+        itemSelected
+          ? currentSelected.filter((el) => el !== id)
+          : currentSelected.concat(id),
+      );
+    };
 
   return (
-    <div className="max-w-3xl mx-auto relative">
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex ml-[-1rem] touch-pan-y">
-          {slides.map((index) => (
-            <div
-              key={index}
-              className="transform flex-none"
-              style={{ flexBasis: "85%", paddingLeft: "1rem" }}
-            >
-              <div className="rounded-[1.8rem] h-full overflow-hidden">
-                <div className="relative h-full w-full flex justify-center embla__parallax__layer">
-                  <img
-                    className="rounded-[1.8rem] block h-[22rem] w-full object-cover"
-                    src={`https://picsum.photos/600/350?v=${index}`}
-                    alt="Your alt text"
-                    style={{ flex: "0 0 calc(115% + 2rem)" }}
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Flechas de navegación movidas debajo del carrusel para pruebas */}
-      <div className="flex items-center justify-center gap-4 mt-4">
-        <PrevButton
-          onClick={onPrevButtonClick}
-          disabled={prevBtnDisabled}
-        />
-        <NextButton
-          onClick={onNextButtonClick}
-          disabled={nextBtnDisabled}
-        />
-      </div>
+    <div className="overflow-x-auto scrollbar-hide">
+      <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+        {slides.map(({ id, title, image }) => (
+          <Card
+            key={id}
+            itemId={id}
+            id={id}
+            title={title}
+            image={image}
+            onClick={handleClick(id)}
+            selected={isItemSelected(id)}
+          />
+        ))}
+      </ScrollMenu>
     </div>
-  )
-}
+  );
+};
 
-export default EmblaCarousel
+const LeftArrow: React.FC = () => {
+  const visibility = React.useContext(VisibilityContext);
+  // @ts-ignore
+  const isFirstItemVisible = visibility.useIsVisible?.('first', true);
+  return (
+    <Arrow
+      disabled={isFirstItemVisible}
+      // @ts-ignore
+      onClick={() => visibility.scrollPrev?.()}
+      className="left"
+    >
+      {/* Puedes usar un ícono aquí */}
+      <span className="text-2xl">{'‹'}</span>
+    </Arrow>
+  );
+};
+
+const RightArrow: React.FC = () => {
+  const visibility = React.useContext(VisibilityContext);
+  // @ts-ignore
+  const isLastItemVisible = visibility.useIsVisible?.('last', false);
+  return (
+    <Arrow
+      disabled={isLastItemVisible}
+      // @ts-ignore
+      onClick={() => visibility.scrollNext?.()}
+      className="right"
+    >
+      {/* Puedes usar un ícono aquí */}
+      <span className="text-2xl">{'›'}</span>
+    </Arrow>
+  );
+};
+
+type CardProps = {
+  id: number;
+  itemId: number;
+  title: string;
+  image: string;
+  onClick: () => void;
+  selected: boolean;
+};
+
+const Card: React.FC<CardProps> = ({ id, title, image, onClick, selected }) => {
+  return (
+    <div
+      onClick={onClick}
+      className={`w-[220px] h-[320px] mx-2 cursor-pointer rounded-lg bg-white border-2 ${
+        selected ? 'border-blue-500' : 'border-transparent'
+      }`}
+      tabIndex={0}
+    >
+      <img src={image} alt={title} className="w-full h-[180px] object-cover rounded-t-lg" />
+      <div className="p-2 text-center">{title}</div>
+    </div>
+  );
+};
+
+const Arrow: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ children, ...props }) => (
+  <button
+    {...props}
+    className="px-2 py-1 text-2xl bg-white rounded-full shadow disabled:opacity-50"
+  >
+    {children}
+  </button>
+);
+
+export default EmblaCarousel;

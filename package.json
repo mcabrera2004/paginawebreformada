@@ -19,8 +19,10 @@
     "next-sanity": "^9.11.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-horizontal-scrolling-menu": "^7.1.1",
     "sanity": "^3.89.0",
-    "styled-components": "^6.1.18"
+    "styled-components": "^6.1.18",
+    "tailwind-scrollbar-hide": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",

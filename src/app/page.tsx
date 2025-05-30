@@ -1,4 +1,3 @@
-//src/app/page.tsx
 import { client } from "@/sanity/lib/client";
 import { NavBar } from "@/components/NavBar";
 import { HeroSection } from "@/components/HeroSection";
@@ -16,6 +15,11 @@ const fakeArticles = [
   { id: 3, title: "Artículo 3", image: "https://picsum.photos/600/350?v=3" },
   { id: 4, title: "Artículo 4", image: "https://picsum.photos/600/350?v=4" },
   { id: 5, title: "Artículo 5", image: "https://picsum.photos/600/350?v=5" },
+  { id: 6, title: "Artículo 6", image: "https://picsum.photos/600/350?v=6" },
+  { id: 7, title: "Artículo 7", image: "https://picsum.photos/600/350?v=7" },
+  { id: 8, title: "Artículo 8", image: "https://picsum.photos/600/350?v=8" },
+  { id: 9, title: "Artículo 9", image: "https://picsum.photos/600/350?v=9" },
+  { id: 10, title: "Artículo 10", image: "https://picsum.photos/600/350?v=10" },
 ];
 
 export default async function Home() {
@@ -31,17 +35,10 @@ export default async function Home() {
     <>
       <NavBar />
       <HeroSection />
-      <div className="flex flex-col md:flex-row items-start p-8 pt-[70px] gap-8">
-        <main className="md:basis-[49%] w-full flex flex-col items-center justify-center text-center ">
-          <img
-            src="/logo-transparente.png"
-            alt="Logo"
-            className="w-[400px] mb-9"
-          />
-        </main>
-        <aside className="md:basis-[51%] w-full">
+      <div className="w-full flex flex-col items-center p-8 pt-[70px] gap-8">
+        <aside className="w-full">
           <EmblaCarousel
-            slides={fakeArticles.map((a) => a.id)}
+            slides={fakeArticles}
             options={{ loop: true }}
           />
         </aside>
