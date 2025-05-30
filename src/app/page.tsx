@@ -36,14 +36,15 @@ export default async function Home() {
       <NavBar />
       <HeroSection />
       <div className="w-full my-8 flex flex-col md:flex-row gap-8">
-        <div className="w-full md:w-[35%] flex justify-center items-center">
-          {/* Reemplaza '/logo.png' con la ruta real a tu logo */}
+        {/* Bloque de la izquierda con padding a la izquierda en pantallas medianas */}
+        <div className="w-full md:w-[35%] flex justify-center items-center md:pl-4">
           <img
             src="/logo-transparente.png"
             alt="Logo"
-            className="w-full h-auto max-w-[350px]"
+            className="w-full h-auto max-w-[300px] md:max-w-[221px] custom:max-w-[300px]"
           />
         </div>
+        {/* Bloque de la derecha sin padding extra */}
         <div className="w-full md:w-[65%]">
           <EmblaCarousel slides={fakeArticles} options={{ loop: true }} />
         </div>

@@ -12,6 +12,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      screens: {
+        custom: "1060px",
+      },
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],
