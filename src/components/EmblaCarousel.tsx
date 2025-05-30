@@ -75,7 +75,7 @@ const RightArrow: React.FC = () => {
   // @ts-ignore
   const isLastItemVisible = visibility.useIsVisible?.('last', false);
   return (
-    <div className="absolute bottom-[-50px] left-[46%] transform translate-x-16">
+    <div className="absolute bottom-[-50px] left-[44%] transform translate-x-16">
       <Arrow
         disabled={isLastItemVisible}
         // @ts-ignore
