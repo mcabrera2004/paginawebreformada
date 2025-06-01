@@ -1,3 +1,4 @@
+export const revalidate = 60;
 import { client } from "@/sanity/lib/client";
 import { NavBar } from "@/components/NavBar";
 import { HeroSection } from "@/components/HeroSection";
