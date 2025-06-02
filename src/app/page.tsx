@@ -1,4 +1,12 @@
+export const metadata = {
+    title: "Presbiterianismo",
+    icons: {
+        icon: "/favicon.ico"
+    }
+};
+
 export const revalidate = 60;
+
 import { client } from "@/sanity/lib/client";
 import { NavBar } from "@/components/NavBar";
 import { HeroSection } from "@/components/HeroSection";
@@ -49,7 +57,9 @@ export default async function Home() {
     title: post.title,
     image: post.mainImage?.asset?.url || "/logo-transparente.png",
     slug: post.slug.current,
-    excerpt: getPlainText(post.body).slice(0, 160) + (getPlainText(post.body).length > 160 ? "..." : ""),
+    excerpt:
+      getPlainText(post.body).slice(0, 160) +
+      (getPlainText(post.body).length > 160 ? "..." : ""),
   }));
 
   return (
@@ -65,7 +75,9 @@ export default async function Home() {
           />
         </div>
         <div className="w-full md:w-[65%] flex flex-col items-center">
-          <h1 className="text-2xl font-bold mb-4 text-center">Artículos recientes</h1>
+          <h1 className="text-2xl font-bold mb-4 text-center">
+            Artículos recientes
+          </h1>
           <ArticleCarousel articles={carouselArticles} />
         </div>
       </div>
