@@ -2,69 +2,74 @@ export const revalidate = 60;
 import { client } from "@/sanity/lib/client";
 import { NavBar } from "@/components/NavBar";
 import { HeroSection } from "@/components/HeroSection";
-import EmblaCarousel from "@/components/EmblaCarousel";
+import { ArticleCarousel } from "@/components/ArticleCarousel";
+import { ContactSection } from "@/components/ContactSection";
 
 type Post = {
   _id: string;
   title: string;
   slug: { current: string };
+  mainImage?: {
+    asset?: { url: string };
+    alt?: string;
+  };
+  body?: any[];
 };
-
-const fakeArticles = [
-  { id: 1, title: "Artículo 1", image: "https://picsum.photos/600/350?v=1" },
-  { id: 2, title: "Artículo 2", image: "https://picsum.photos/600/350?v=2" },
-  { id: 3, title: "Artículo 3", image: "https://picsum.photos/600/350?v=3" },
-  { id: 4, title: "Artículo 4", image: "https://picsum.photos/600/350?v=4" },
-  { id: 5, title: "Artículo 5", image: "https://picsum.photos/600/350?v=5" },
-  { id: 6, title: "Artículo 6", image: "https://picsum.photos/600/350?v=6" },
-  { id: 7, title: "Artículo 7", image: "https://picsum.photos/600/350?v=7" },
-  { id: 8, title: "Artículo 8", image: "https://picsum.photos/600/350?v=8" },
-  { id: 9, title: "Artículo 9", image: "https://picsum.photos/600/350?v=9" },
-  { id: 10, title: "Artículo 10", image: "https://picsum.photos/600/350?v=10" },
-];
 
 export default async function Home() {
   const posts: Post[] = await client.fetch(
     `*[_type == "post"] | order(_createdAt desc)[0...5]{
       _id,
       title,
-      slug
+      slug,
+      mainImage{
+        asset->{url},
+        alt
+      },
+      body
     }`
   );
+
+  // Función para extraer texto plano del body (Portable Text)
+  function getPlainText(body: any[] = []) {
+    if (!Array.isArray(body) || body.length === 0) {
+      return "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+    }
+    return body
+      .filter((block) => block._type === "block" && block.children)
+      .map((block) =>
+        block.children.map((child: any) => child.text).join("")
+      )
+      .join(" ");
+  }
+
+  // Prepara los artículos para el carrusel
+  const carouselArticles = posts.map((post) => ({
+    id: post._id,
+    title: post.title,
+    image: post.mainImage?.asset?.url || "/logo-transparente.png",
+    slug: post.slug.current,
+    excerpt: getPlainText(post.body).slice(0, 160) + (getPlainText(post.body).length > 160 ? "..." : ""),
+  }));
 
   return (
     <>
       <NavBar />
       <HeroSection />
-      <div className="w-full my-16 flex flex-col md:flex-row gap-8">
-        {/* Bloque de la izquierda con padding a la izquierda en pantallas medianas */}
-        <div className="w-full md:w-[35%] flex justify-center items-center md:pl-4">
+      <div className="w-full my-10 flex flex-col md:flex-row gap-6">
+        <div className="w-full md:w-[35%] flex justify-center items-center md:pl-2">
           <img
             src="/logo-transparente.png"
             alt="Logo"
             className="w-full h-auto max-w-[300px] md:max-w-[221px] custom:max-w-[300px]"
           />
         </div>
-        {/* Bloque de la derecha sin padding extra */}
-        <div className="w-full md:w-[65%]">
-          <EmblaCarousel slides={fakeArticles} options={{ loop: true }} />
+        <div className="w-full md:w-[65%] flex flex-col items-center">
+          <h1 className="text-2xl font-bold mb-4 text-center">Artículos recientes</h1>
+          <ArticleCarousel articles={carouselArticles} />
         </div>
       </div>
-      <div className="w-full px-8 pb-8">
-        <h1 className="text-2xl font-bold mb-6">Artículos recientes</h1>
-        <ul className="space-y-3">
-          {posts.map((post) => (
-            <li key={post._id}>
-              <a
-                href={`/${post.slug.current}`}
-                className="text-blue-600 underline"
-              >
-                {post.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ContactSection />
     </>
   );
 }

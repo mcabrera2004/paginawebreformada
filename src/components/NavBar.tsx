@@ -24,12 +24,10 @@ export function NavBar() {
     return () => window.removeEventListener("resize", handleResize);
   }, [mobileMenuOpen]);
 
-  // Definición de los items del menú para facilitar su reutilización
+  // Solo un ítem: Inicio, que lleva a la raíz "/"
   const menuItems = (
     <>
-      <a className="text-white block py-2" href="#">Item One</a>
-      <a className="text-white block py-2" href="#">Item Two</a>
-      <a className="text-white block py-2" href="#">Item Three</a>
+      <a className="text-white block py-2" href="/">Inicio</a>
     </>
   );
 
@@ -41,7 +39,7 @@ export function NavBar() {
       >
         <div className="max-w-[1200px] w-full mx-auto px-[25px] h-full flex items-center">
           <div className="font-black">
-            <a className="text-white" href="#">Transparent to Solid Nav Row</a>
+            <a className="text-white" href="/">Presbiterianismo.com</a>
           </div>
           {/* Menú para pantallas grandes */}
           <div className="ml-auto hidden md:flex space-x-5">

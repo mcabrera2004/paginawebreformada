@@ -24,10 +24,10 @@ body {
 }
 
 /* Oculta la scrollbar del contenedor del carrusel */
-.react-horizontal-scrolling-menu--scroll-container {
+.hide-scrollbar {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE y Edge */
 }
-.react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
+.hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari y Opera */
 }
