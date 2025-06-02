@@ -25,7 +25,11 @@ const portableTextComponents = {
         href={value.href}
         target="_blank"
         rel="noopener noreferrer"
-        style={{ color: "#2563eb", textDecoration: "underline" }}
+        style={{
+          color: "#2563eb",
+          textDecoration: "underline",
+          overflowWrap: "break-word", // permite el corte de palabras largas
+        }}
       >
         {children}
       </a>
