@@ -19,6 +19,18 @@ const portableTextComponents = {
       />
     ),
   },
+  marks: {
+    link: ({ value, children }: any) => (
+      <a
+        href={value.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "#2563eb", textDecoration: "underline" }} // azul y subrayado
+      >
+        {children}
+      </a>
+    ),
+  },
 };
 
 const query = defineQuery(
@@ -83,7 +95,7 @@ export default async function Page({
           </div>
         </div>
       )}
-      <div className="px-4 md:px-0 max-w-2xl mx-auto">
+      <div className="px-4 md:px-0 max-w-3xl mx-auto">
         {data.body && (
           <div className="leading-relaxed text-lg space-y-4">
             <PortableText value={data.body} components={portableTextComponents} />
