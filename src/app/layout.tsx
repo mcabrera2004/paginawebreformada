@@ -3,7 +3,6 @@ import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
 
-// Agrega el objeto metadata aquí
 export const metadata = {
   title: "Presbiterianismo",
   description: "Descubre artículos y recursos sobre el presbiterianismo.",
